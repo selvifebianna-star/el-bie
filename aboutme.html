@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about me ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg: #080a0f;
+  --bg2: #0d1018;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --dim: #a0a8b8;
+  --text: #f0ece4;
+  --accent: #8b9dc3;
+  --red: #8c3a3a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── STARS CANVAS ── */
+#stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+
+/* ── VIGNETTE ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.75) 100%);
+}
+
+/* ── MAIN WRAPPER ── */
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── EDIT HINT ── */
+.edit-hint {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: #333;
+  letter-spacing: 0.15em;
+  margin-bottom: 40px;
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  margin-bottom: 52px;
+  animation: fadeUp 1s ease both;
+}
+
+.name-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-shadow: 0 0 40px rgba(201,168,76,0.3), 0 0 80px rgba(201,168,76,0.1);
+  outline: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.name:focus { border-bottom-color: var(--gold); }
+
+.name-deco {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  color: var(--dim);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #c8c4bc;
+  margin-top: 16px;
+  line-height: 1.6;
+  outline: none;
+}
+.tagline:focus { color: #fff; }
+
+/* ornament */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--gold);
+  opacity: 0.4;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+}
+.ornament::before, .ornament::after {
+  content:'';
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.ornament::after { transform: scaleX(-1); }
+
+/* ── SPOTIFY ── */
+.spotify-wrap {
+  margin: 0 auto 52px;
+  width: 100%;
+  max-width: 480px;
+  animation: fadeUp 1s 0.15s ease both;
+}
+
+.spotify-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.spotify-wrap iframe {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.1);
+}
+
+.spotify-input-wrap {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.spotify-input-wrap input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid #1e2028;
+  color: var(--dim);
+  padding: 7px 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.spotify-input-wrap input:focus { border-color: var(--gold); color: var(--text); }
+
+.spotify-input-wrap button {
+  background: var(--gold);
+  border: none;
+  color: #000;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.spotify-input-wrap button:hover { opacity: 0.8; }
+
+/* ── CARDS ── */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  animation: fadeUp 1s 0.3s ease both;
+}
+
+.card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 22px 20px;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content:'';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: rgba(201,168,76,0.2);
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.card-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.card-body {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #ffffff;
+  outline: none;
+  min-height: 20px;
+}
+.card-body:focus { color: #fff; }
+.card-body:empty::before {
+  content: attr(data-placeholder);
+  color: #333;
+  pointer-events: none;
+}
+
+/* full width card */
+.card.full { grid-column: 1 / -1; }
+
+/* ── SECTION: TENTANG ── */
+.about-section {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 28px 28px;
+  margin-bottom: 16px;
+  animation: fadeUp 1s 0.45s ease both;
+}
+
+.about-section .card-title { margin-bottom: 12px; }
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #ffffff;
+  font-style: italic;
+  outline: none;
+  min-height: 20px;
+}
+.about-text:focus { font-style: normal; color: #fff; }
+.about-text:empty::before {
+  content: attr(data-placeholder);
+  color: #333;
+  font-style: normal;
+}
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  animation: fadeUp 1s 0.5s ease both;
+}
+
+.stat {
+  flex: 1;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 18px 12px;
+  text-align: center;
+  transition: background 0.2s;
+}
+.stat:hover { background: rgba(255,255,255,0.04); }
+
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  display: block;
+  outline: none;
+}
+.stat-num:focus { color: var(--gold2); }
+
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c0c8d8;
+  margin-top: 4px;
+  display: block;
+  outline: none;
+}
+
+/* ── PRIBADI LIST ── */
+.pribadi-section {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  animation: fadeUp 1s 0.55s ease both;
+}
+
+.pribadi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+  margin-top: 12px;
+}
+
+.pribadi-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.pribadi-key {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  min-width: 60px;
+}
+
+.pribadi-val {
+  font-size: 0.88rem;
+  color: #ffffff;
+  outline: none;
+  flex: 1;
+}
+.pribadi-val:focus { color: #fff; }
+.pribadi-val:empty::before {
+  content: attr(data-placeholder);
+  color: #2a2a2a;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  animation: fadeUp 1s 0.7s ease both;
+}
+
+.footer-line {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: #2a2a2a;
+  text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 99px; }
+
+/* ── SELECTION ── */
+::selection { background: rgba(201,168,76,0.25); color: var(--gold2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 520px) {
+  .cards { grid-template-columns: 1fr; }
+  .pribadi-grid { grid-template-columns: 1fr; }
+  .stats-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="page">
+
+  <div class="edit-hint">✦ klik teks manapun untuk edit ✦</div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="name-wrapper">
+      <div class="name" contenteditable="true" spellcheck="false">nama lo</div>
+    </div>
+    <span class="name-deco" contenteditable="true" spellcheck="false">panggilan · dia/mereka</span>
+    <div class="ornament">✦</div>
+    <div class="tagline" contenteditable="true" spellcheck="false" data-placeholder="tagline atau quote favorit lo...">
+      "i'd rather walk the world alone<br>than pretend i fit in."
+    </div>
+  </div>
+
+  <!-- SPOTIFY -->
+  <div class="spotify-wrap">
+    <div class="spotify-label">♪ now playing</div>
+    <iframe id="spotify-frame"
+      src="https://open.spotify.com/embed/track/0GN3KMBJVKhFfXNjtfHgNm?utm_source=generator&theme=0"
+      height="152"
+      frameBorder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+    <div class="spotify-input-wrap">
+      <input type="text" id="spotify-url" placeholder="paste link lagu Spotify lo..." />
+      <button onclick="changeSpotify()">ganti</button>
+    </div>
+  </div>
+
+  <!-- CARDS ROW 1 -->
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🌙</span>
+      <div class="card-title">hobi</div>
+      <div class="card-body" contenteditable="true" spellcheck="false" data-placeholder="hobi lo...">
+        dengerin musik<br>nonton film thriller<br>desain grafis<br>overthinking
+      </div>
+    </div>
+    <div class="card">
+      <span class="card-icon">🖤</span>
+      <div class="card-title">kesukaan</div>
+      <div class="card-body" contenteditable="true" spellcheck="false" data-placeholder="hal yang lo suka...">
+        malam hari<br>hujan deras<br>kopi hitam<br>lagu sedih
+      </div>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎬</span>
+      <div class="card-title">film favorit</div>
+      <div class="card-body" contenteditable="true" spellcheck="false" data-placeholder="film...">
+        Gone Girl<br>The Raid<br>Basic Instinct
+      </div>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎵</span>
+      <div class="card-title">musik favorit</div>
+      <div class="card-body" contenteditable="true" spellcheck="false" data-placeholder="artist / band...">
+        Avenged Sevenfold<br>Linkin Park<br>The Weeknd
+      </div>
+    </div>
+  </div>
+
+  <!-- TENTANG -->
+  <div class="about-section">
+    <div class="card-title">✦ tentang gue</div>
+    <div class="about-text" contenteditable="true" spellcheck="false" data-placeholder="cerita tentang diri lo...">
+      gue orang yang lebih nyaman di keramaian tapi pikiran gue selalu di tempat lain. suka hal-hal yang punya kedalaman — film, musik, arsitektur, percakapan tengah malam. sedang belajar buat lebih hadir di dunia nyata.
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num" contenteditable="true" spellcheck="false">∞</span>
+      <span class="stat-label" contenteditable="true" spellcheck="false">playlist</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" contenteditable="true" spellcheck="false">3am</span>
+      <span class="stat-label" contenteditable="true" spellcheck="false">peak hours</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" contenteditable="true" spellcheck="false">99%</span>
+      <span class="stat-label" contenteditable="true" spellcheck="false">introvert</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" contenteditable="true" spellcheck="false">☕</span>
+      <span class="stat-label" contenteditable="true" spellcheck="false">kopi/hari</span>
+    </div>
+  </div>
+
+  <!-- PRIBADI -->
+  <div class="pribadi-section">
+    <div class="card-title">✦ info pribadi</div>
+    <div class="pribadi-grid">
+      <div class="pribadi-item">
+        <span class="pribadi-key">umur</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">18</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">kota</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">Semarang</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">MBTI</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">INFJ</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">zodiak</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">—</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">status</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">sedang belajar</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">mood</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">melankolis</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">ig</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="@...">@username</span>
+      </div>
+      <div class="pribadi-item">
+        <span class="pribadi-key">lainnya</span>
+        <span class="pribadi-val" contenteditable="true" spellcheck="false" data-placeholder="...">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="ornament">✦</div>
+    <div class="footer-line">made with ♡ · <span contenteditable="true" spellcheck="false">nama lo</span> © 2025</div>
+  </div>
+
+</div>
+
+<script>
+// ── STARS ──
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 160; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random(),
+      speed: Math.random() * 0.004 + 0.001,
+      offset: Math.random() * Math.PI * 2,
+    });
+  }
+}
+
+function drawStars(t) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    const alpha = (Math.sin(t * s.speed + s.offset) + 1) / 2 * 0.7 + 0.05;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(201,168,76,${alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+
+resize();
+initStars();
+requestAnimationFrame(drawStars);
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+// ── SPOTIFY EMBED ──
+function extractSpotifyId(url) {
+  // handles: https://open.spotify.com/track/TRACKID or spotify:track:TRACKID
+  const match = url.match(/track[\/:]([a-zA-Z0-9]+)/);
+  return match ? match[1] : null;
+}
+
+function changeSpotify() {
+  const url = document.getElementById('spotify-url').value.trim();
+  if (!url) return;
+  const id = extractSpotifyId(url);
+  if (!id) {
+    alert('Link Spotify-nya gak kedeteksi. Contoh: https://open.spotify.com/track/...');
+    return;
+  }
+  const frame = document.getElementById('spotify-frame');
+  frame.src = `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`;
+  document.getElementById('spotify-url').value = '';
+}
+
+// Enter on spotify input
+document.getElementById('spotify-url').addEventListener('keydown', e => {
+  if (e.key === 'Enter') changeSpotify();
+});
+
+// ── PREVENT NEWLINES on single-line fields ──
+document.querySelectorAll('.name, .name-deco, .pribadi-val, .stat-num, .stat-label').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+  });
+});
+
+// ── MOUSE PARALLAX on cards ──
+document.addEventListener('mousemove', e => {
+  const mx = (e.clientX / window.innerWidth - 0.5) * 6;
+  const my = (e.clientY / window.innerHeight - 0.5) * 6;
+  document.querySelectorAll('.card').forEach((card, i) => {
+    const depth = (i % 3 + 1) * 0.3;
+    card.style.transform = `translate(${mx*depth}px, ${my*depth - 2}px)`;
+  });
+});
+</script>
+</body>
+</html>
